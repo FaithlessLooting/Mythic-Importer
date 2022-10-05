@@ -50,16 +50,12 @@ $currentPage = 0;
 while($currentPage < $totalPages) {
     [$cards, $currentpage] = pokemonGetData($currentPage+1, $set);
     foreach($cards as $card){
-        // echo '<pre>';
-        // var_dump($card);
-        // echo '</pre>';
-        // die();
 		$fount_post = false;
 		$fount_post = post_exists( $card->name." - ".$card->set->name,'','','');
 		if(!$fount_post){
 		$item = array(
 			'Name' => $card->name." - ".$card->set->name,
-            'SKU' => $card->id." - ".$card->set->id." - ".$card->set->number
+            'SKU' => $card->id
 		);
         $setNumber = $card->number."/".$setTotal;
 		$user_id = get_current_user(); // this has NO SENSE AT ALL, because wp_insert_post uses current user as default value
@@ -96,9 +92,10 @@ while($currentPage < $totalPages) {
 		update_post_meta( $post_id, '_backorders', 'no' );
 		update_post_meta( $post_id, '_stock', '' );
 		wp_set_post_categories( $post_id, 22, true);
-        update_field('rarity_variant', $card->rarity, [$post_id]);
-        update_field('number', $setNumber, [$post_id]);
-        update_field('year', $year, [$post_id]);
+        update_field('rarity_variant', $card->rarity, $post_id);
+        update_field('set_name', $card->set->name, $post_id);
+        update_field('number', $setNumber, $post_id);
+        update_field('year', $year, $post_id);
 	} 
 }
 }
