@@ -146,6 +146,46 @@ foreach($sets->data as $set){
 			<input type="submit" value="Do it!" />
     	</form>
 	</div>
+
+	<div>
+		<h2>MTG Importer (by set)</h2>
+		<p style="color:red">Warning: this will take a while...</p>
+	    <form method="POST" action="<?php echo admin_url( 'admin.php' ); ?>">
+		<select name="sets" id="sets">
+		<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://api.scryfall.com/sets',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+$sets = json_decode($response);
+
+foreach($sets->data as $set){
+	$setname = $set->name;
+	$setcode = $set->code;
+	echo '<option value="'.$setcode.'">'.$set->name.'</option>';
+}
+		?>
+		</select>
+
+			<input type="hidden" name="action" value="mtg_import" />
+			<input type="submit" value="Do it!" />
+    	</form>
+	</div>
+
+
 	<?php
 }
 
@@ -153,3 +193,4 @@ foreach($sets->data as $set){
 require(dirname(__FILE__).'/pokemonTCG.php');
 require(dirname(__FILE__).'/fnbTCG.php');
 require(dirname(__FILE__).'/digimonTCG.php');
+require(dirname(__FILE__).'/MTG.php');
