@@ -33,14 +33,16 @@ $page = 1;
 while($has_more == true) {
     [$cards, $has_more, $page] = mtgGetData($page, $set);
     foreach($cards as $card){
-  $fount_post = false;
-  $fount_post = post_exists( $card->name,'','','');
-
-  if(!$fount_post){
+  if($card->games != ["arena"]){
+  foreach($card->finishes as $finish){
+    $finish = ucfirst($finish); 
+    $fount_post = false;
+    $fount_post = post_exists( $card->name.' - '.$finish,'','','');
+    if($fount_post == false){
     $year = explode( '-', $card->released_at);
     $year = $year[0];
   $item = array(
-    'Name' => $card->name,
+    'Name' => $card->name.' - '.$finish,
     'SKU' => $card->id
   );
   $user_id = get_current_user(); // this has NO SENSE AT ALL, because wp_insert_post uses current user as default value
@@ -81,8 +83,11 @@ while($has_more == true) {
       update_field('set_name', $card->set_name, $post_id);
       update_field('number', $card->collector_number, $post_id);
       update_field('year', $year, $post_id);
-} 
 
+    } 
+  }
+
+}
 }
 }
     wp_redirect( $_SERVER['HTTP_REFERER'] );
