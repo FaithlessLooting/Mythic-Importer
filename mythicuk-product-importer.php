@@ -185,6 +185,15 @@ foreach($sets->data as $set){
     	</form>
 	</div>
 
+	<div>
+		<h2>Yu-Gi-Oh Importer (all items)</h2>
+		<p style="color:red">Warning: this will take a VERY long time...</p>
+	    <form method="POST" action="<?php echo admin_url( 'admin.php' ); ?>">
+			<input type="hidden" name="action" value="yugioh_import" />
+			<input type="submit" value="Do it!" />
+    	</form>
+	</div>
+
 
 	<?php
 }
@@ -194,3 +203,4 @@ require(dirname(__FILE__).'/pokemonTCG.php');
 require(dirname(__FILE__).'/fnbTCG.php');
 require(dirname(__FILE__).'/digimonTCG.php');
 require(dirname(__FILE__).'/MTG.php');
+require(dirname(__FILE__).'/yugioh.php');
