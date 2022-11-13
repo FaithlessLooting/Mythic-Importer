@@ -33,7 +33,7 @@ $page = 1;
 while($has_more == true) {
     [$cards, $has_more, $page] = mtgGetData($page, $set);
     foreach($cards as $card){
-  if($card->games != ["arena"]){
+  if($card->games != ["arena"] && $card->games != ["mtgo"]){
   foreach($card->finishes as $finish){
     $finish = ucfirst($finish); 
     $fount_post = false;
