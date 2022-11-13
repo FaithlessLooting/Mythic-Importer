@@ -198,9 +198,16 @@ foreach($sets->data as $set){
 	<?php
 }
 
+//card importers by game
 
 require(dirname(__FILE__).'/pokemonTCG.php');
 require(dirname(__FILE__).'/fnbTCG.php');
 require(dirname(__FILE__).'/digimonTCG.php');
 require(dirname(__FILE__).'/MTG.php');
 require(dirname(__FILE__).'/yugioh.php');
+
+
+//additional functionality
+
+require(dirname(__FILE__).'/order_placed_cert_create.php');
+require(dirname(__FILE__).'/page_load_update_pop_report.php');
