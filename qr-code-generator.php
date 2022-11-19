@@ -23,9 +23,22 @@
 
     $url     = get_home_url().'/wp-content/plugins/mythicuk-product-importer/qrcodes/'.$fileName;
     $post_id = $post_id;
-    $desc    = "image description";
+    $desc    = "QR code for certificate";
+    $file_array  = [ 'name' => wp_basename( $url ), 'tmp_name' => download_url( $url ) ];
 
-    $image = media_sideload_image( $url, $post_id, $desc,'id' );
+    // If error storing temporarily, return the error.
+    if ( is_wp_error( $file_array['tmp_name'] ) ) {
+        return $file_array['tmp_name'];
+    }
 
-    set_post_thumbnail( $post_id, $image );
+    // Do the validation and storage stuff.
+    $id = media_handle_sideload( $file_array, 0, $desc );
+    var_dump($id);
+    // If error storing permanently, unlink.
+    if ( is_wp_error( $id ) ) {
+        @unlink( $file_array['tmp_name'] );
+        return $id;
+    }
+
+    set_post_thumbnail( $post_id, $id );
     }
