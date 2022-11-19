@@ -1,6 +1,6 @@
 <?php
-add_action('woocommerce_thankyou', 'enroll_student', 10, 1);
-function enroll_student( $order_id ) {
+add_action('woocommerce_thankyou', 'generate_cert', 10, 1);
+function generate_cert( $order_id ) {
     if ( ! $order_id )
         return;
 
@@ -52,12 +52,13 @@ function enroll_student( $order_id ) {
                 $new_post_name = $last_post_name + 1;
                 $new_post_name = str_pad($new_post_name, 4, '0', STR_PAD_LEFT);
             }
+            $post_title = $new_post_name." - ".$name;
 
              wp_reset_query(); 
              
              $post_arr = array(
                 'post_type' => 'us_portfolio',
-                 'post_title'   => $new_post_name." - ".$name,
+                 'post_title'   => $post_title,
                  'post_content' => '',
                  'post_status'  => 'publish',
                  'post_author'  => 2,
@@ -74,12 +75,11 @@ function enroll_student( $order_id ) {
 
         }
 
-        // Output some data
-        //var_dump('<p>Order ID: '. $order_id . ' — Order Status: ' . $order->get_status() . ' — Order is paid: ' . $paid . '</p>');
-
         // Flag the action as done (to avoid repetitions on reload for example)
         $order->update_meta_data( '_thankyou_action_done', true );
         $order->save();
+
+        make_qr($post_title, $post_id);
     }
 }
 }

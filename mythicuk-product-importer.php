@@ -194,9 +194,20 @@ foreach($sets->data as $set){
     	</form>
 	</div>
 
+	
+	<div>
+		<h2>Test QR gen</h2>
+	    <form method="POST" action="<?php echo admin_url( 'admin.php' ); ?>">
+			<input type="hidden" name="action" value="qr" />
+			<input type="submit" value="Do it!" />
+    	</form>
+	</div>
+
 
 	<?php
 }
+add_action( 'admin_action_qr', 'make_qr' );
+
 
 //card importers by game
 
@@ -211,3 +222,4 @@ require(dirname(__FILE__).'/yugioh.php');
 
 require(dirname(__FILE__).'/order_placed_cert_create.php');
 require(dirname(__FILE__).'/page_load_update_pop_report.php');
+require(dirname(__FILE__).'/qr-code-generator.php');
