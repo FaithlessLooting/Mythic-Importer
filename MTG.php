@@ -41,9 +41,11 @@ while($has_more == true) {
     if($fount_post == false){
     $year = explode( '-', $card->released_at);
     $year = $year[0];
+    $slug = sanitize_title($card->name);
+    $set_slug = sanitize_title($card->set_name);
   $item = array(
     'Name' => $card->name.' - '.$finish,
-    'SKU' => $card->id
+    'SKU' => $slug.'-'.$finish.'-'.$set_slug;
   );
   $user_id = get_current_user(); // this has NO SENSE AT ALL, because wp_insert_post uses current user as default value
   // $user_id = $some_user_id_we_need_to_use; // So, user is selected..

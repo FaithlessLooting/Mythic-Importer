@@ -33,7 +33,7 @@
 
     // Do the validation and storage stuff.
     $id = media_handle_sideload( $file_array, 0, $desc );
-    var_dump($id);
+    // var_dump($id);
     // If error storing permanently, unlink.
     if ( is_wp_error( $id ) ) {
         @unlink( $file_array['tmp_name'] );

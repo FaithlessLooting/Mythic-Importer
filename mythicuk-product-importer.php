@@ -195,13 +195,13 @@ foreach($sets->data as $set){
 	</div>
 
 	
-	<div>
+	<!-- <div>
 		<h2>Test QR gen</h2>
 	    <form method="POST" action="<?php echo admin_url( 'admin.php' ); ?>">
 			<input type="hidden" name="action" value="qr" />
 			<input type="submit" value="Do it!" />
     	</form>
-	</div>
+	</div> -->
 
 
 	<?php
