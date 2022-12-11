@@ -72,14 +72,14 @@ function generate_cert( $order_id ) {
              update_field('sku', $sku, $post_id);
              update_field('card_grading', "Ungraded", $post_id);
 
-
+             make_qr($post_title, $post_id);
         }
 
         // Flag the action as done (to avoid repetitions on reload for example)
         $order->update_meta_data( '_thankyou_action_done', true );
         $order->save();
 
-        make_qr($post_title, $post_id);
+        
     }
 }
 }
