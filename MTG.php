@@ -37,15 +37,17 @@ while($has_more == true) {
   foreach($card->finishes as $finish){
     $finish = ucfirst($finish); 
     $fount_post = false;
-    $fount_post = post_exists( $card->name.' - '.$finish,'','','');
-    if($fount_post == false){
-    $year = explode( '-', $card->released_at);
-    $year = $year[0];
     $slug = sanitize_title($card->name);
     $set_slug = sanitize_title($card->set_name);
+    $sku = $slug.'-'.$finish.'-'.$set_slug;
+    $found_post = get_product_by_sku($sku);
+    //$fount_post = post_exists( $card->name.' - '.$finish,'','','');
+    if(!$fount_post){
+    $year = explode( '-', $card->released_at);
+    $year = $year[0];
   $item = array(
     'Name' => $card->name.' - '.$finish,
-    'SKU' => $slug.'-'.$finish.'-'.$set_slug;
+    'SKU' =>  $sku
   );
   $user_id = get_current_user(); // this has NO SENSE AT ALL, because wp_insert_post uses current user as default value
   // $user_id = $some_user_id_we_need_to_use; // So, user is selected..
